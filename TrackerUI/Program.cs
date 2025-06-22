@@ -1,3 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using TrackerLibrary;
+
 namespace TrackerUI
 {
     internal static class Program
@@ -10,11 +14,23 @@ namespace TrackerUI
         {
             ApplicationConfiguration.Initialize();
 
-            // Intialize the database connections
-            TrackerLibrary.GlobalConfig.InitializeConnections(true, true);
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
-            Application.Run(new CreatePrizeForm());
+            // Register data connections
+            builder.Services.AddSingleton<IDataConnection, SqlConnector>();
+            builder.Services.AddSingleton<IDataConnection, TextConector>();
 
+            // Register forms
+            builder.Services.AddTransient<CreatePrizeForm>();
+            builder.Services.AddTransient<CreateTeamForm>();
+            builder.Services.AddTransient<CreateTournamentForm>();
+            builder.Services.AddTransient<TournamentDashboardForm>();
+            builder.Services.AddTransient<TournamentViewerForm>();
+
+            using IHost host = builder.Build();
+
+            // Resolve the form with all dependencies wired up
+            Application.Run(host.Services.GetRequiredService<CreatePrizeForm>());
             //Application.Run(new TournamentDashboardForm());
         }
     }

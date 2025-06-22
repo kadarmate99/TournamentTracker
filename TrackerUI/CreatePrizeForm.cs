@@ -13,9 +13,12 @@ namespace TrackerUI
 {
     public partial class CreatePrizeForm : Form
     {
-        public CreatePrizeForm()
+        private readonly IEnumerable<IDataConnection> _dataConnections;
+
+        public CreatePrizeForm(IEnumerable<IDataConnection> dataConnections)
         {
             InitializeComponent();
+            _dataConnections = dataConnections;
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e)
@@ -28,9 +31,9 @@ namespace TrackerUI
                     prizeAmmountValue.Text,
                     prizePercentageValue.Text);
 
-                foreach (IDataConnection db in GlobalConfig.Connections)
+                foreach (IDataConnection dataConnection in _dataConnections)
                 {
-                    db.CreatePrize(model);
+                    dataConnection.CreatePrize(model);
                 }
 
                 // restore default values on from if validation was successfull
