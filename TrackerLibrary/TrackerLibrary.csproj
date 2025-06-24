@@ -122,6 +122,10 @@
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.6\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.9.0.6\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
@@ -157,16 +161,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDataConnection.cs" />
-    <Compile Include="MatchupModel.cs" />
-    <Compile Include="MatchupEntryModel.cs" />
-    <Compile Include="PersonModel.cs" />
-    <Compile Include="PrizeModel.cs" />
+    <Compile Include="DataAccess\IDataConnection.cs" />
+    <Compile Include="DataAccess\TextConnectorProcessor.cs" />
+    <Compile Include="Models\MatchupModel.cs" />
+    <Compile Include="Models\MatchupEntryModel.cs" />
+    <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\PrizeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlConnector.cs" />
-    <Compile Include="TeamModel.cs" />
-    <Compile Include="TextConector.cs" />
-    <Compile Include="TournamentModel.cs" />
+    <Compile Include="DataAccess\SqlConnector.cs" />
+    <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="DataAccess\TextConnector.cs" />
+    <Compile Include="Models\TournamentModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

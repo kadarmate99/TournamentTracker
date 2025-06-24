@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TrackerLibrary;
+using TrackerLibrary.DataAccess;
 
 namespace TrackerUI
 {
@@ -17,8 +17,8 @@ namespace TrackerUI
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
             // Register data connections
-            builder.Services.AddSingleton<IDataConnection, SqlConnector>();
-            builder.Services.AddSingleton<IDataConnection, TextConector>();
+            //builder.Services.AddSingleton<IDataConnection, SqlConnector>();
+            builder.Services.AddSingleton<IDataConnection, TextConnector>();
 
             // Register forms
             builder.Services.AddTransient<CreatePrizeForm>();
