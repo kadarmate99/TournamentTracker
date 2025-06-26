@@ -10,19 +10,40 @@ namespace TrackerLibrary.DataAccess
 {
     public class TextConnector : IDataConnection
     {
-        private const string PrizesFile = "PrizeModels.csv";
+        private const string PrizeModelsFile = "PrizeModels.csv";
+        private const string PersonModelsFile = "PersonModels.csv";
 
-        // TODO - Make the CreatePrize method actually save to the text file.
+
+        public PersonModel CreatePerson(PersonModel personModel)
+        {
+            List<PersonModel> persons = PersonModelsFile.FullFilePath().LoadFile().ConvertToPersonModels();
+
+            int currentId = 1;
+            if (persons.Count > 0)
+            {
+                currentId = persons.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            personModel.Id = currentId;
+
+            persons.Add(personModel);
+
+            persons.SaveToPersonModelsFile(PersonModelsFile);
+
+            return personModel;
+
+        }
+
         /// <summary>
         /// Saves a new prize to the text file.
         /// </summary>
-        /// <param name="model">The Prize information</param>
+        /// <param name="prizeModel">The Prize information</param>
         /// <returns>The prize information, including the unique identifier</returns>
-        public PrizeModel CreatePrize(PrizeModel model)
+        public PrizeModel CreatePrize(PrizeModel prizeModel)
         {
             // Load text file (as a list<string>)
             // Convert the text to List>PrizeModel>
-            List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
+            List<PrizeModel> prizes = PrizeModelsFile.FullFilePath().LoadFile().ConvertToPrizeModels();
 
             // Find max ID
             int currentId = 1;
@@ -31,16 +52,16 @@ namespace TrackerLibrary.DataAccess
                 currentId = prizes.OrderByDescending(x => x.Id).First().Id + 1;
 
             }
-            model.Id = currentId;
+            prizeModel.Id = currentId;
 
             // Add the new record with the new ID (max +1)
-            prizes.Add(model);
+            prizes.Add(prizeModel);
 
             // Convert the prizes to list<string>
             // Save the list<string> to the text file
-            prizes.SaveToPrizeFile(PrizesFile);
+            prizes.SaveToPrizeModelsFile(PrizeModelsFile);
 
-            return model;
+            return prizeModel;
         }
     }
 }

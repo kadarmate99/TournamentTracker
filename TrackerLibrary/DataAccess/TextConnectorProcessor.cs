@@ -28,29 +28,62 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
         public static List<PrizeModel> ConvertToPrizeModels(this List<string> lines)
         {
-            List<PrizeModel> output = new List<PrizeModel>();
+            List<PrizeModel> prizeModels = new List<PrizeModel>();
 
             foreach (var line in lines)
             {
                 string[] cols = line.Split(',');
+
                 PrizeModel p = new PrizeModel();
                 p.Id = int.Parse(cols[0]);
                 p.PlaceNumber = int.Parse(cols[1]);
                 p.PlaceName = cols[2];
                 p.PrizeAmount = decimal.Parse(cols[3]);
                 p.PrizePercentage = double.Parse(cols[4]);
-                output.Add(p);
+                
+                prizeModels.Add(p);
             }
-            return output;
+            return prizeModels;
         }
 
-        public static void SaveToPrizeFile(this List<PrizeModel> models, string fileName)
+        public static List<PersonModel> ConvertToPersonModels(this List<string> lines)
+        {
+            List<PersonModel> personModels = new List<PersonModel>();
+
+            foreach (var line in lines)
+            {
+                string[] cols = line.Split(',');
+
+                PersonModel p = new PersonModel();
+                p.FirstName = cols[0];
+                p.LastName = cols[1];
+                p.EmailAddress = cols[2];
+                p.CellphoneNumber = cols[3];
+
+                personModels.Add(p);
+            }
+            return personModels;
+        }
+
+        public static void SaveToPrizeModelsFile(this List<PrizeModel> models, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (var p in models)
+            foreach (PrizeModel p in models)
             {
                 lines.Add($"{p.Id},{p.PlaceNumber},{p.PlaceName},{p.PrizeAmount},{p.PrizePercentage}");
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+        
+        public static void SaveToPersonModelsFile(this List<PersonModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach (PersonModel p in models)
+            {
+                lines.Add($"{p.Id},{p.FirstName},{p.LastName},{p.EmailAddress},{p.CellphoneNumber}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);

@@ -26,11 +26,13 @@ namespace TrackerUI
         {
             if (IsCreatePrizeFormValid())
             {
-                PrizeModel model = new PrizeModel(
+                PrizeModel model = new PrizeModel
+                    (
                     placeNameValue.Text,
                     placeNumberValue.Text,
                     prizeAmmountValue.Text,
-                    prizePercentageValue.Text);
+                    prizePercentageValue.Text
+                    );
 
                 foreach (IDataConnection dataConnection in _dataConnections)
                 {
