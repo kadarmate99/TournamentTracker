@@ -55,10 +55,11 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 string[] cols = line.Split(',');
 
                 PersonModel p = new PersonModel();
-                p.FirstName = cols[0];
-                p.LastName = cols[1];
-                p.EmailAddress = cols[2];
-                p.CellphoneNumber = cols[3];
+                p.Id= int.Parse(cols[0]);
+                p.FirstName = cols[1];
+                p.LastName = cols[2];
+                p.EmailAddress = cols[3];
+                p.CellphoneNumber = cols[4];
 
                 personModels.Add(p);
             }

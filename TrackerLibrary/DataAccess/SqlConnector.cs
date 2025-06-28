@@ -10,11 +10,6 @@ namespace TrackerLibrary.DataAccess
     public class SqlConnector : IDataConnection
     {
 
-        // TODO - Make the CreatePerson method actually save to the SQL database.
-        public PersonModel CreatePerson(PersonModel model)
-        {
-            throw new NotImplementedException();
-        }
 
         // TODO - Make the CreatePrize method actually save to the SQL database.
         /// <summary>
@@ -25,6 +20,18 @@ namespace TrackerLibrary.DataAccess
         public PrizeModel CreatePrize(PrizeModel model)
         {
            throw new NotImplementedException();
+        }
+
+        // TODO - Make the CreatePerson method actually save to the SQL database.
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        // TODO - Make the GetPerson_All method actually retrieve all persons from the SQL database.
+        public List<PersonModel> GetPerson_All()
+        {
+            throw new NotImplementedException();
         }
     }
 }
