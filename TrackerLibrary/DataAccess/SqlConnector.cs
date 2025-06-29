@@ -33,5 +33,11 @@ namespace TrackerLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        // TODO - Make the CreateTeam method actually save to the SQL database.
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

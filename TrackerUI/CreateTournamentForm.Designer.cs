@@ -209,9 +209,9 @@
             prizesLabel.ForeColor = Color.FromArgb(51, 153, 255);
             prizesLabel.Location = new Point(361, 271);
             prizesLabel.Name = "prizesLabel";
-            prizesLabel.Size = new Size(187, 37);
+            prizesLabel.Size = new Size(85, 37);
             prizesLabel.TabIndex = 22;
-            prizesLabel.Text = "Team / Players";
+            prizesLabel.Text = "Prizes";
             // 
             // deleteSelectedPlayerButton
             // 

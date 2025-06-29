@@ -40,7 +40,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 p.PlaceName = cols[2];
                 p.PrizeAmount = decimal.Parse(cols[3]);
                 p.PrizePercentage = double.Parse(cols[4]);
-                
+
                 prizeModels.Add(p);
             }
             return prizeModels;
@@ -55,7 +55,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 string[] cols = line.Split(',');
 
                 PersonModel p = new PersonModel();
-                p.Id= int.Parse(cols[0]);
+                p.Id = int.Parse(cols[0]);
                 p.FirstName = cols[1];
                 p.LastName = cols[2];
                 p.EmailAddress = cols[3];
@@ -66,28 +66,92 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             return personModels;
         }
 
+        public static List<TeamModel> ConvertToTeamModels(this List<string> lines, string peopleFileName)
+        {
+            //id,team name, list of ids separeted by |
+            //3,Máté's team,1|3|5
+
+            List<TeamModel> teamModels = new List<TeamModel>();
+            List<PersonModel> personModels = peopleFileName.FullFilePath().LoadFile().ConvertToPersonModels();
+
+
+            foreach (string line in lines)
+            {
+                string[] cols = line.Split(',');
+
+                TeamModel team = new TeamModel();
+                team.Id = int.Parse(cols[0]);
+                team.TeamName = cols[1];
+
+                string[] personIDs = cols[2].Split('|');
+
+                foreach (string personID in personIDs)
+                {
+                    // Find the person in the list of person models whose Id matches the current personID,
+                    // then add that person to the team's TeamMembers list.
+                    // `personModels.Where(...)` filters the list to match the ID,
+                    // and `.First()` retrieves the first (and only) matching person.
+                    team.TeamMembers.Add(personModels.Where(x => x.Id == int.Parse(personID)).First());
+                }
+
+                teamModels.Add(team);
+            }
+            return teamModels;
+        }
+
         public static void SaveToPrizeModelsFile(this List<PrizeModel> models, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (PrizeModel p in models)
+            foreach (PrizeModel prize in models)
             {
-                lines.Add($"{p.Id},{p.PlaceNumber},{p.PlaceName},{p.PrizeAmount},{p.PrizePercentage}");
+                lines.Add($"{prize.Id},{prize.PlaceNumber},{prize.PlaceName},{prize.PrizeAmount},{prize.PrizePercentage}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
-        
+
         public static void SaveToPersonModelsFile(this List<PersonModel> models, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (PersonModel p in models)
+            foreach (PersonModel person in models)
             {
-                lines.Add($"{p.Id},{p.FirstName},{p.LastName},{p.EmailAddress},{p.CellphoneNumber}");
+                lines.Add($"{person.Id},{person.FirstName},{person.LastName},{person.EmailAddress},{person.CellphoneNumber}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+
+        public static void SaveToTeamModelsFile(this List<TeamModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach (TeamModel team in models)
+            {
+                lines.Add($"{team.Id},{team.TeamName},{ConvertPersonModelsToString(team.TeamMembers)}");
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+
+        private static string ConvertPersonModelsToString(List<PersonModel> personModels)
+        {
+            string personModelsString = "";
+
+            // If there are no person models, return an empty string
+            if (personModels.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (PersonModel person in personModels)
+            {
+                personModelsString += $"{person.Id}|";
+            }
+            personModelsString =  personModelsString.Substring(0, personModelsString.Length - 1); // remove the last '|'
+            
+            return personModelsString;
         }
     }
 }

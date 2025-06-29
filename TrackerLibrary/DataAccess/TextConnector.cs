@@ -12,6 +12,7 @@ namespace TrackerLibrary.DataAccess
     {
         private const string PrizeModelsFile = "PrizeModels.csv";
         private const string PersonModelsFile = "PersonModels.csv";
+        private const string TeamModelsFile = "TeamModels.csv";
 
 
         /// <summary>
@@ -46,19 +47,19 @@ namespace TrackerLibrary.DataAccess
 
         public PersonModel CreatePerson(PersonModel personModel)
         {
-            List<PersonModel> persons = PersonModelsFile.FullFilePath().LoadFile().ConvertToPersonModels();
+            List<PersonModel> PersonModels = PersonModelsFile.FullFilePath().LoadFile().ConvertToPersonModels();
 
             int currentId = 1;
-            if (persons.Count > 0)
+            if (PersonModels.Count > 0)
             {
-                currentId = persons.OrderByDescending(x => x.Id).First().Id + 1;
+                currentId = PersonModels.OrderByDescending(x => x.Id).First().Id + 1;
             }
 
             personModel.Id = currentId;
 
-            persons.Add(personModel);
+            PersonModels.Add(personModel);
 
-            persons.SaveToPersonModelsFile(PersonModelsFile);
+            PersonModels.SaveToPersonModelsFile(PersonModelsFile);
 
             return personModel;
 
@@ -67,6 +68,25 @@ namespace TrackerLibrary.DataAccess
         public List<PersonModel> GetPerson_All()
         {
             return PersonModelsFile.FullFilePath().LoadFile().ConvertToPersonModels();
+        }
+
+        public TeamModel CreateTeam(TeamModel teamModel)
+        {
+            List<TeamModel> teamModels = TeamModelsFile.FullFilePath().LoadFile().ConvertToTeamModels(PersonModelsFile);
+
+            int currentId = 1;
+            if (teamModels.Count > 0)
+            {
+                currentId = teamModels.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            teamModel.Id = currentId;
+
+            teamModels.Add(teamModel);
+
+            teamModels.SaveToTeamModelsFile(TeamModelsFile);
+
+            return teamModel;
         }
     }
 }

@@ -149,5 +149,20 @@ namespace TrackerUI
             }
 
         }
+
+        private void createTeamButton_Click(object sender, EventArgs e)
+        {
+            TeamModel team = new TeamModel();
+
+            team.TeamName = teamNameValue.Text;
+            team.TeamMembers = selectedTeamMembers;
+
+            foreach (IDataConnection dataConnection in _dataConnections)
+            {
+                dataConnection.CreateTeam(team);
+            }
+
+            // TODO - If we aren't closing this form after creation, reset the form.
+        }
     }
 }
