@@ -28,7 +28,7 @@ namespace TrackerUI
             // CreateSampleData();
 
             LoadListData();
-            UpdateMemberLists();
+            UpdateLists();
         }
 
         private void LoadListData()
@@ -52,7 +52,7 @@ namespace TrackerUI
             selectedTeamMembers.Add(new PersonModel { FirstName = "Bill", LastName = "Jones" });
         }
 
-        private void UpdateMemberLists()
+        private void UpdateLists()
         {
             selectTeamMemberDropDown.DataSource = null;
 
@@ -83,7 +83,7 @@ namespace TrackerUI
                 }
 
                 selectedTeamMembers.Add(newPerson);
-                UpdateMemberLists();
+                UpdateLists();
 
                 // restore default values on from if validation was successfull
                 firstNameValue.Text = "";
@@ -132,7 +132,7 @@ namespace TrackerUI
                 availableTeamMembers.Remove(selectedPerson);
                 selectedTeamMembers.Add(selectedPerson);
 
-                UpdateMemberLists();
+                UpdateLists();
             }
         }
 
@@ -145,7 +145,7 @@ namespace TrackerUI
                 selectedTeamMembers.Remove(selectedPerson);
                 availableTeamMembers.Add(selectedPerson);
 
-                UpdateMemberLists();
+                UpdateLists();
             }
 
         }

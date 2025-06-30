@@ -39,5 +39,11 @@ namespace TrackerLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        // TODO - Make the GetTeam_All method actually retrieve all teams from the SQL database.
+        public List<TeamModel> GetTeam_All()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace TrackerUI
             using IHost host = builder.Build();
 
             // Resolve the form with all dependencies wired up
-            Application.Run(host.Services.GetRequiredService<CreateTeamForm>());
+            Application.Run(host.Services.GetRequiredService<CreateTournamentForm>());
         }
     }
 }
